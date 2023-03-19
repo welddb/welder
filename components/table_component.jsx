@@ -1,6 +1,7 @@
 import React from "react";
 
 const Table_Component = ({
+  editPopup,
   header_data = [],
   body_data = [],
   editIcon = "",
@@ -20,7 +21,7 @@ const Table_Component = ({
 
       <tbody>
         {body_data.map((data, i) => (
-          <tr className="text-center bg-slate-100">
+          <tr key={i} className="text-center bg-slate-100">
             <td className="py-2">{data.id}</td>
             <td className="py-2">{data.name ? data.name : data.process}</td>
             <td className="py-2">{data.role ? data.role : data.voltage}</td>
@@ -30,9 +31,7 @@ const Table_Component = ({
             <td className="py-2">
               {data.password ? data.password : data.gas_flow}
             </td>
-            {editIcon !== "" && (
-              <td className="cursor-pointer hover:text-blue-400">{editIcon}</td>
-            )}
+            {editIcon !== "" && <td onClick={editPopup}>{editIcon}</td>}
           </tr>
         ))}
       </tbody>
