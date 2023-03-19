@@ -1,15 +1,8 @@
-import Layout from "@/components/layout";
-import Signin from "@/components/signin";
+import User_Form from "@/components/user_form";
 import React from "react";
 
 const HomePage = () => {
-  return (
-    <>
-      <div className="w-screen h-screen flex items-center justify-center bg-slate-400">
-        <Signin />
-      </div>
-    </>
-  );
+  return <div className="p-8 flex flex-col gap-2">{/* <User_Form /> */}</div>;
 };
 
 export default HomePage;
