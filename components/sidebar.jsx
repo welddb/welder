@@ -1,46 +1,61 @@
+import { useRouter } from "next/router";
 import React from "react";
 import { CgProfile } from "react-icons/cg";
 import { HiUsers } from "react-icons/hi";
 import { MdEngineering } from "react-icons/md";
+import Button_Component from "./button_component";
+
+const Sidebar_Links = [
+  {
+    text: "Welder",
+    icon: <MdEngineering size={20} />,
+    url: "/welder",
+  },
+  {
+    text: "User",
+    icon: <HiUsers size={20} />,
+    url: "/user",
+  },
+  {
+    text: "Profile",
+    icon: <CgProfile size={20} />,
+    url: "/profile",
+  },
+];
 
 const Sidebar = () => {
-  return (
-    <div className="w-64 h-screen bg-blue-900">
-      <div className="flex m-5 ">
-        <img
-          src="/"
-          alt="DP"
-          className="bg-blue-500 rounded-md h-10 w-10 p-2"
-        />
-        <p className="text-white bg-blue-500  rounded-md w-36 ml-3 p-2 ">
-          Username
-        </p>
-      </div>
+  const router = useRouter();
 
-      <div className="mt-40 ">
-        <ul className="text-white">
-          <li className="flex flex-row items-center cursor-pointer hover:bg-blue-500 active:bg-blue-700">
-            <CgProfile className="h-5 w-5 m-6 cursor-pointer" /> Profile
-          </li>
-          <li className="flex flex-row items-center cursor-pointer hover:bg-blue-500 active:bg-blue-700">
-            <HiUsers className="h-5 w-5 m-6 cursor-pointer" />
-            User
-          </li>
-          <li className="flex flex-row items-center cursor-pointer hover:bg-blue-500 active:bg-blue-700">
-            <MdEngineering
-              color="#ffffff"
-              className="h-5 w-5  m-6 cursor-pointer "
-            />
-            Welder
-          </li>
-        </ul>
-      </div>
-      <button
-        type="submit"
-        className=" text-white h-9 bg-blue-500 w-36 rounded-md mt-44 ml-9 "
+  return (
+    <div className="bg-blue-900 pr-12 py-4 text-white flex gap-14 flex-col">
+      <h3
+        className="font-bold text-xl pl-12 cursor-pointer"
+        onClick={() => router.push("/")}
       >
-        Logout
-      </button>
+        Admin
+      </h3>
+
+      <div className="flex flex-col gap-6">
+        {Sidebar_Links.map((link, i) => (
+          <span
+            onClick={() => router.push(link.url)}
+            key={i}
+            className={`flex items-center gap-2 py-1 pl-12 pr-10 rounded-r-lg cursor-pointer  ${
+              router.pathname === link.url ? "bg-blue-800" : "hover:bg-blue-700"
+            }`}
+          >
+            {link.icon}
+            <p>{link.text}</p>
+          </span>
+        ))}
+      </div>
+      <div className="flex-1"></div>
+
+      <Button_Component
+        onClick={() => router.push("/signin")}
+        buttonText="Logout"
+        buttonClass="!bg-blue-500 hover:!bg-blue-600 ml-12"
+      />
     </div>
   );
 };
