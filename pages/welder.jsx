@@ -1,4 +1,5 @@
 import Button_Component from "@/components/button_component";
+import protectedRoute from "@/components/protected";
 import Table_Component from "@/components/table_component";
 import { User_Body_Data, User_Head_Data } from "@/components/User_Data";
 import { Welder_Body_Data, Welder_Head_Data } from "@/components/Welder_Data";
@@ -24,4 +25,4 @@ const Welder = () => {
   );
 };
 
-export default Welder;
+export default protectedRoute(Welder);

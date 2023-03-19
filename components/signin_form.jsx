@@ -1,15 +1,25 @@
 import React from "react";
 import { Field, Form, Formik } from "formik";
 import Button_Component from "./button_component";
+import { signIn } from "next-auth/react";
 
 const Signin_Form = () => {
   const initialValues = {
-    userName: "",
+    email: "",
     password: "",
   };
 
-  const handleSubmit = (values) => {
-    console.log(values, "values");
+  const handleSubmit = async (values) => {
+    try {
+      console.log(values, "values");
+      const res = await signIn("credentials", {
+        ...values,
+        redirect: false,
+      });
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div className="bg-slate-100 min-w-[25vw] border border-solid rounded-lg ">
@@ -23,10 +33,10 @@ const Signin_Form = () => {
               <div className="flex flex-col gap-2">
                 <label>Username</label>
                 <Field
-                  type="text"
-                  name="userName"
+                  type="email"
+                  name="email"
                   className="border p-1 border-solid border-gray-500 rounded-md"
-                  placeholder="Enter your username"
+                  placeholder="Enter your email"
                 />
               </div>
 
@@ -43,7 +53,7 @@ const Signin_Form = () => {
               <Button_Component
                 buttonText="Submit"
                 type="submit"
-                onClick={null}
+                // onClick={null}
               />
             </Form>
           );
