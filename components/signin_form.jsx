@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Field, Form, Formik } from "formik";
 import Button_Component from "./button_component";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { signIn } from "next-auth/react";
 
 const Signin_Form = () => {
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const initialValues = {
     email: "",
     password: "",
@@ -40,14 +42,24 @@ const Signin_Form = () => {
                 />
               </div>
 
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 relative">
                 <label>Password</label>
                 <Field
-                  type="password"
+                  type={passwordVisible ? "text" : "password"}
                   name="password"
                   className="border p-1 border-solid border-gray-500 rounded-md"
                   placeholder="Enter your password"
                 />
+                <span
+                  className="absolute bottom-2 right-3 cursor-pointer"
+                  onClick={() => setPasswordVisible((prev) => !prev)}
+                >
+                  {passwordVisible ? (
+                    <AiFillEyeInvisible size={20} />
+                  ) : (
+                    <AiFillEye size={20} />
+                  )}
+                </span>
               </div>
 
               <Button_Component
