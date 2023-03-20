@@ -1,3 +1,4 @@
+import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import React from "react";
 import { CgProfile } from "react-icons/cg";
@@ -52,7 +53,7 @@ const Sidebar = () => {
       <div className="flex-1"></div>
 
       <Button_Component
-        onClick={() => router.push("/signin")}
+        onClick={() => signOut()}
         buttonText="Logout"
         buttonClass="!bg-blue-500 hover:!bg-blue-600 ml-12"
       />

@@ -16,6 +16,8 @@ export const authOtpion = {
                     const { email, password } = credentials;
                     console.log(email,password);
                     const re =   /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+                    // throw new Error("Please provide credentials");
+                    
                     if(email == null || password == null || !String(email).match(re) || String(password).length <= 0){
                         console.log('here');
                         throw new Error("Please provide credentials");

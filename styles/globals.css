@@ -10,6 +10,9 @@
   .input_class {
     @apply bg-slate-100 border border-slate-800 focus:outline-slate-800 py-1 px-2 rounded-md;
   }
+  td{
+    @apply text-left
+  }
 }
 
 /* Hide scrollbar  */

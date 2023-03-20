@@ -5,7 +5,7 @@ class UserController {
     static async getUsersController(req,res){
     const response = new ResponseWraper(res);
     try {
-        const user = await User.find();
+        const user = await User.find({$or:[{role:'supervisor'},{role:'operator'}]});
         if(user){
             return response.ok(user);
         }else{
@@ -51,6 +51,8 @@ class UserController {
     try {
         const {decodedEmail} = req.body;
         const {userName,role,joinnedDate} = req.body;
+        // return 
+        // return response.unauthorized('Profile not found');
         const user = await User.findOneAndUpdate({email:decodedEmail},{
             userName,
             role,
@@ -70,7 +72,8 @@ class UserController {
     try {
         const {email,userName,role,password,joinnedDate} = req.body;
         const user = await User.find({email});
-        if(user){
+        if(user && user?.length > 0){
+            console.log(user);
             return response.badRequest('User already exist');
         }else{
             const userD = await User.create({
@@ -93,6 +96,7 @@ class UserController {
         const {userName,role,joinnedDate} = req.body;
         const {id} = req.query;
         
+        // return response.internalServerError();
             const userD = await User.findByIdAndUpdate(id,{
                 userName,
                 role,
