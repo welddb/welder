@@ -6,22 +6,22 @@ import { authOtpion } from "../auth/[...nextauth]";
 
 const usersApi = async (req, res) => {
     const response = new ResponseWraper(res);
-    const session = await getServerSession(req,res,authOtpion);
-    if(session){
+    const session = await getServerSession(req, res, authOtpion);
+    if (session) {
         await dbConnect();
-            switch (req.method) {
-                case 'GET':
-                    return await UserController.getProfileController({...req,body:{...req.body,decodedEmail:session.user.email}},res);
-                case 'PUT':
-                    return await UserController.editProfileController({...req,body:{...req.body,decodedEmail:session.user.email}},res);
-                // case 'DELETE':
-                //     await UserController.deleteUsersController(req,res);
-                default:
-                    return response.badRequest('method not allowed');
-            }
-        }else{
-            return response.unauthorized('Not allowed');
-}
+        switch (req.method) {
+            case 'GET':
+                return await UserController.getProfileController({ ...req, body: { ...req.body, decodedEmail: session.email } }, res);
+            case 'PUT':
+                return await UserController.editProfileController({ ...req, body: { ...req.body, decodedEmail: session.email } }, res);
+            // case 'DELETE':
+            //     await UserController.deleteUsersController(req,res);
+            default:
+                return response.badRequest('method not allowed');
+        }
+    } else {
+        return response.unauthorized('Not allowed');
+    }
 }
 
 export default usersApi;

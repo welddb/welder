@@ -43,7 +43,7 @@ const Sidebar = () => {
           <span
             onClick={() => router.push(link.url)}
             key={i}
-            className={`flex items-center gap-2 py-1 pl-12 pr-10 rounded-r-lg cursor-pointer  ${
+            className={`flex items-center gap-2 py-2 pl-12 pr-10 rounded-r-lg cursor-pointer  ${
               "/" + router.asPath.split("/")[1] === link.url
                 ? "bg-blue-800"
                 : "hover:bg-blue-700"

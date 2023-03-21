@@ -56,7 +56,7 @@ const Welder = () => {
     <>
       {" "}
       {formPopup && (
-        <div className="h-screen w-screen fixed bg-black/50 top-0 left-0 flex items-center justify-center">
+        <div className="h-screen z-10 w-screen fixed bg-black/50 top-0 left-0 flex items-center justify-center">
           <Welder_Form
             closePopup={setFormPopup}
             setFormPopup={setComplete}

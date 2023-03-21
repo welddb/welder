@@ -6,6 +6,7 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import axiosInstance from "@/utils/axios.instance";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
+import { useSession } from "next-auth/react";
 
 const UserCreateSchema = Yup.object().shape({
   email: Yup.string()
@@ -25,11 +26,15 @@ const UserEditSchema = Yup.object().shape({
 });
 
 const User_Form = ({ setFormPopup, type, initialValuesProps, closePopup }) => {
+  const { status, data: sessionData } = useSession();
+
+  console.log(sessionData.role, "session");
+  console.log(initialValuesProps, "initialValuesProps");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const initialValues = initialValuesProps || {
     id: "",
     userName: "",
-    role: "supervisor",
+    role: sessionData.role === "admin" ? "supervisor2" : "operator",
     joinDate: "",
     email: "",
     password: "",
@@ -37,8 +42,8 @@ const User_Form = ({ setFormPopup, type, initialValuesProps, closePopup }) => {
   };
 
   const handleSubmit = (values) => {
-    // console.log(values);
-    const { id, password, email, ...rest } = values;
+    console.log(values);
+    const { id, email, ...rest } = values;
     if (type == "Edit") {
       editUser(id, rest);
     } else if (type == "editProfile") {
@@ -93,7 +98,7 @@ const User_Form = ({ setFormPopup, type, initialValuesProps, closePopup }) => {
     <div className="bg-slate-200 p-8 rounded-md min-w-[400px] relative">
       <span
         className="absolute top-5 right-5 cursor-pointer"
-        onClick={() => closePopup(false)}
+        onClick={closePopup}
       >
         <RxCross2 size={20} />
       </span>
@@ -109,7 +114,9 @@ const User_Form = ({ setFormPopup, type, initialValuesProps, closePopup }) => {
         {() => {
           return (
             <Form className="flex flex-col gap-3">
-              <h6 className="text-center font-semibold text-lg">{type} User</h6>
+              <h6 className="text-center font-semibold text-lg">
+                {type === "editProfile" ? "Edit Profile" : `${type} User`}
+              </h6>
 
               <div className="field_wrapper">
                 <label htmlFor="userName">Username</label>
@@ -153,7 +160,9 @@ const User_Form = ({ setFormPopup, type, initialValuesProps, closePopup }) => {
                   id="role"
                   className="input_class"
                 >
-                  <option value="supervisor">Supervisor</option>
+                  {sessionData.role === "admin" && (
+                    <option value="supervisor">Supervisor</option>
+                  )}
                   <option value="operator">Operator</option>
                 </Field>
                 <ErrorMessage
@@ -177,33 +186,33 @@ const User_Form = ({ setFormPopup, type, initialValuesProps, closePopup }) => {
                   className="text-red-500"
                 />
               </div>
-              {type === "Add" && (
-                <div className="field_wrapper relative">
-                  <label htmlFor="password">Password</label>
-                  <Field
-                    name="password"
-                    type={passwordVisible ? "text" : "password"}
-                    id="password"
-                    className="input_class"
-                  />
-                  <span
-                    className="absolute bottom-2 right-3 cursor-pointer"
-                    onClick={() => setPasswordVisible((prev) => !prev)}
-                  >
-                    {passwordVisible ? (
-                      <AiFillEyeInvisible size={20} />
-                    ) : (
-                      <AiFillEye size={20} />
-                    )}
-                  </span>
+              {/* {type === "Add" && ( */}
+              <div className="field_wrapper relative">
+                <label htmlFor="password">Password</label>
+                <Field
+                  name="password"
+                  type={passwordVisible ? "text" : "password"}
+                  id="password"
+                  className="input_class"
+                />
+                <span
+                  className="absolute bottom-2 right-3 cursor-pointer"
+                  onClick={() => setPasswordVisible((prev) => !prev)}
+                >
+                  {passwordVisible ? (
+                    <AiFillEyeInvisible size={20} />
+                  ) : (
+                    <AiFillEye size={20} />
+                  )}
+                </span>
 
-                  <ErrorMessage
-                    component="span"
-                    name="password"
-                    className="text-red-500"
-                  />
-                </div>
-              )}
+                <ErrorMessage
+                  component="span"
+                  name="password"
+                  className="text-red-500"
+                />
+              </div>
+              {/* )} */}
               <Button_Component buttonText="Submit" type="submit" />
             </Form>
           );

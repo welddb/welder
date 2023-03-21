@@ -1,4 +1,4 @@
-import Button_Component from "@/components/button_component";
+import protectedRoute from "@/components/protected";
 import Welder_Form from "@/components/welder_form";
 import axiosInstance from "@/utils/axios.instance";
 import { useRouter } from "next/router";
@@ -27,7 +27,7 @@ const Welder_Details = () => {
     getWelder(router.query.id);
   }, []);
 
-  console.log(router.query.id);
+  // console.log(router.query.id);
 
   const [formPopup, setFormPopup] = useState(false);
   const [type, setType] = useState("Add");
@@ -57,7 +57,7 @@ const Welder_Details = () => {
   return (
     <>
       {formPopup && (
-        <div className="h-screen w-screen fixed bg-black/50 top-0 left-0 flex items-center justify-center">
+        <div className="h-screen z-10 w-screen fixed bg-black/50 top-0 left-0 flex items-center justify-center">
           <Welder_Form
             closePopup={setFormPopup}
             setFormPopup={setComplete}
@@ -186,7 +186,7 @@ const Welder_Details = () => {
   );
 };
 
-export default Welder_Details;
+export default protectedRoute(Welder_Details);
 
 // id: "",
 //     process: "mig",

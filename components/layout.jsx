@@ -1,4 +1,5 @@
 import axiosInstance from "@/utils/axios.instance";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Sidebar from "./sidebar";
@@ -6,6 +7,7 @@ import Sidebar from "./sidebar";
 const Layout = ({ children }) => {
   const [data, setData] = useState({});
   const router = useRouter();
+  const { status, session } = useSession();
 
   const getProfile = async () => {
     try {
@@ -19,7 +21,7 @@ const Layout = ({ children }) => {
   };
   useEffect(() => {
     getProfile();
-  }, []);
+  }, [status]);
 
   return (
     <>

@@ -15,15 +15,18 @@
     @apply text-left;
   }
 
-  .welder_container {
+  .welder_container,
+  .profile_container {
     @apply flex [&>*]:flex-1 gap-5;
   }
 
-  .welder_details p {
+  .welder_details p,
+  .profile_container p {
     @apply text-gray-500;
   }
 
-  .welder_details h6 {
+  .welder_details h6,
+  .profile_container h6 {
     @apply font-bold bg-slate-300/40 py-1 px-2 rounded-md text-gray-600;
   }
 }
