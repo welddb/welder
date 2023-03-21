@@ -27,6 +27,8 @@ const Sidebar_Links = [
 const Sidebar = () => {
   const router = useRouter();
 
+  // console.log("/" + router.asPath.split("/")[1]);
+
   return (
     <div className="bg-blue-900 pr-12 py-4 text-white flex gap-14 flex-col">
       <h3
@@ -42,7 +44,9 @@ const Sidebar = () => {
             onClick={() => router.push(link.url)}
             key={i}
             className={`flex items-center gap-2 py-1 pl-12 pr-10 rounded-r-lg cursor-pointer  ${
-              router.pathname === link.url ? "bg-blue-800" : "hover:bg-blue-700"
+              "/" + router.asPath.split("/")[1] === link.url
+                ? "bg-blue-800"
+                : "hover:bg-blue-700"
             }`}
           >
             {link.icon}

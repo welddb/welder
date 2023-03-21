@@ -1,20 +1,14 @@
 import { model, Schema, models } from "mongoose";
 
 
-const ProcessSchema = new Schema({
-    mig: String,
-    tig: String,
-    plasma: String,
-});
+
 const MaterialSchema = new Schema({
     composition: String,
     thickness: String,
 });
 
 const WelderSchema = new Schema({
-    process: {
-        type: ProcessSchema
-    },
+    process: { type: String, enum: ['mig', 'tig', 'plasma'], default: 'mig' },
     voltage: {
         type: String
     },
@@ -28,6 +22,9 @@ const WelderSchema = new Schema({
         type: String
     },
     wireFeedSpeed: {
+        type: String
+    },
+    wireDiameter: {
         type: String
     },
     filler: {
@@ -50,4 +47,3 @@ const WelderSchema = new Schema({
 );
 
 export const Welder = models.Welder || model('Welder', WelderSchema);
-    

@@ -10,8 +10,21 @@
   .input_class {
     @apply bg-slate-100 border border-slate-800 focus:outline-slate-800 py-1 px-2 rounded-md;
   }
-  td{
-    @apply text-left
+
+  td {
+    @apply text-left;
+  }
+
+  .welder_container {
+    @apply flex [&>*]:flex-1 gap-5;
+  }
+
+  .welder_details p {
+    @apply text-gray-500;
+  }
+
+  .welder_details h6 {
+    @apply font-bold bg-slate-300/40 py-1 px-2 rounded-md text-gray-600;
   }
 }
 
