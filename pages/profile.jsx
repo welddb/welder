@@ -87,12 +87,12 @@ const Profile = () => {
         <div className="profile_container">
           <div>
             <p>Email:</p>
-            <h6 className="font-bold">{data.email}</h6>
+            <h6 className="font-bold">{data.email || "-"}</h6>
           </div>
 
           <div>
             <p>Role:</p>
-            <h6 className="font-bold">{data.role}</h6>
+            <h6 className="font-bold">{data.role || "-"}</h6>
           </div>
         </div>
 
@@ -100,7 +100,9 @@ const Profile = () => {
           <div>
             <p>Join date:</p>
             <h6 className="font-bold">
-              {moment(data.joinDate).format("MMMM Do YYYY")}
+              {data.joinDate
+                ? moment(data.joinDate).format("MMMM Do YYYY")
+                : "-"}
             </h6>
           </div>
           <div></div>
