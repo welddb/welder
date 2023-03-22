@@ -3,16 +3,17 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import Button_Component from "./button_component";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { signIn } from "next-auth/react";
-import  Router  from "next/router";
-import * as Yup from 'yup';
-import {toast} from 'react-toastify';
-
+import Router from "next/router";
+import * as Yup from "yup";
+import { toast } from "react-toastify";
 
 const LoginSchema = Yup.object().shape({
-  email: Yup.string().email('Invalid email address format').required('Email is required'),
+  email: Yup.string()
+    .email("Invalid email address format")
+    .required("Email is required"),
   password: Yup.string()
-    .min(6, 'Password must be 6 characters at minimum')
-    .required('Password is required'),
+    .min(6, "Password must be 6 characters at minimum")
+    .required("Password is required"),
 });
 
 const Signin_Form = () => {
@@ -29,22 +30,27 @@ const Signin_Form = () => {
         ...values,
         redirect: false,
       });
-      if(res.status===200){
-        Router.replace("/");
-      }else{
-        toast.error(res.error || 'Something went wrong',{position:toast.POSITION.TOP_RIGHT});
-        
+      if (res.status === 200) {
+        Router.replace("/welder");
+      } else {
+        toast.error(res.error || "Something went wrong", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       }
     } catch (error) {
-      toast.error('Something went wrong',{position:toast.POSITION.TOP_RIGHT});
-      console.log('cred',error);
+      toast.error("Something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      console.log("cred", error);
     }
   };
   return (
     <div className="bg-slate-100 min-w-[25vw] border border-solid rounded-lg ">
       <Formik
-       validationSchema={LoginSchema}
-       initialValues={initialValues} onSubmit={handleSubmit}>
+        validationSchema={LoginSchema}
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+      >
         {() => {
           return (
             <Form className="flex flex-col p-10 shadow-3xl gap-4">
@@ -59,7 +65,11 @@ const Signin_Form = () => {
                   className="border p-1 border-solid border-gray-500 rounded-md"
                   placeholder="Enter your email"
                 />
-                <ErrorMessage component="span" name="email" className="text-red-500" />
+                <ErrorMessage
+                  component="span"
+                  name="email"
+                  className="text-red-500"
+                />
               </div>
 
               <div className="flex flex-col gap-2 relative">
@@ -80,7 +90,11 @@ const Signin_Form = () => {
                     <AiFillEye size={20} />
                   )}
                 </span>
-               <ErrorMessage component="span" name="password" className="text-red-500" />
+                <ErrorMessage
+                  component="span"
+                  name="password"
+                  className="text-red-500"
+                />
               </div>
 
               <Button_Component

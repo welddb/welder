@@ -5,7 +5,9 @@ class WelderController {
     static async getWeldersController(req, res) {
         const response = new ResponseWraper(res);
         try {
-            const welder = await Welder.find();
+            const { name } = req.query;
+            // console.log(req.query);
+            const welder = await Welder.find({ seamName: { $regex: new RegExp(`.*${name ?? ''}.*`), $options: "i" } });
             if (welder) {
                 return response.ok(welder);
             } else {

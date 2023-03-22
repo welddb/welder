@@ -32,7 +32,8 @@ const Welder_Details = () => {
   const [formPopup, setFormPopup] = useState(false);
   const [type, setType] = useState("Add");
   const [intialValues, setInitialValues] = useState({
-    id: "",
+    // id: "",
+    seamName: "",
     process: "mig",
     voltage: "",
     current: "",
@@ -74,6 +75,7 @@ const Welder_Details = () => {
             onClick={(values) => {
               setInitialValues({
                 id: data._id,
+                seamName: data.seamName,
                 process: data.process,
                 voltage: data.voltage,
                 current: data.current,
@@ -100,55 +102,57 @@ const Welder_Details = () => {
           <div className="welder_container">
             {" "}
             <div>
-              <p>Process :</p>
-              <h6>{data.process}</h6>
+              <p>Seam Name :</p>
+              <h6>{data.seamName || "-"}</h6>
             </div>
+            <div>
+              <p>Process :</p>
+              <h6>{data.process || "-"}</h6>
+            </div>
+          </div>
+
+          <div className="welder_container">
             <div>
               <p>Voltage :</p>
-              <h6>{data.voltage}</h6>
+              <h6>{data.voltage || "-"}</h6>
             </div>
-          </div>
-
-          <div className="welder_container">
             <div>
               <p>Current :</p>
-              <h6>{data.current}</h6>
+              <h6>{data.current || "-"}</h6>
             </div>
+          </div>
 
+          <div className="welder_container">
             <div>
               <p>Gasflow :</p>
-              <h6>{data.gasflow}</h6>
+              <h6>{data.gasflow || "-"}</h6>
             </div>
-          </div>
-
-          <div className="welder_container">
             <div>
               <p>PreHeat Temperature :</p>
-              <h6>{data.preheatTemp}</h6>
+              <h6>{data.preheatTemp || "-"}</h6>
             </div>
+          </div>
+
+          <div className="welder_container">
             <div>
               <p>Wire feed Speed :</p>
-              <h6>{data.wireFeedSpeed}</h6>
+              <h6>{data.wireFeedSpeed || "-"}</h6>
             </div>
-          </div>
-
-          <div className="welder_container">
             <div>
               <p>Filler :</p>
-              <h6>{data.filler}</h6>
-            </div>
-            <div>
-              <p>Gas :</p>
-              <h6>{data.gas}</h6>
+              <h6>{data.filler || "-"}</h6>
             </div>
           </div>
 
           <div className="welder_container">
             <div>
-              <p>Wire Diameter :</p>
-              <h6>{data.wireDiameter}</h6>
+              <p>Gas :</p>
+              <h6>{data.gas || "-"}</h6>
             </div>
-            <div></div>
+            <div>
+              <p>Wire Diameter :</p>
+              <h6>{data.wireDiameter || "-"}</h6>
+            </div>
           </div>
 
           <div>
@@ -157,11 +161,11 @@ const Welder_Details = () => {
             <div className="welder_container">
               <div>
                 <p>Composition :</p>
-                <h6>{data.baseMaterail1?.composition}</h6>
+                <h6>{data.baseMaterail1?.composition || "-"}</h6>
               </div>
               <div>
                 <p>Thickness :</p>
-                <h6>{data.baseMaterail1?.thickness}</h6>
+                <h6>{data.baseMaterail1?.thickness || "-"}</h6>
               </div>
             </div>
           </div>
@@ -172,11 +176,11 @@ const Welder_Details = () => {
             <div className="welder_container">
               <div>
                 <p>Composition :</p>
-                <h6>{data.baseMaterail2?.composition}</h6>
+                <h6>{data.baseMaterail2?.composition || "-"}</h6>
               </div>
               <div>
                 <p>Thickness :</p>
-                <h6>{data.baseMaterail2?.thickness}</h6>
+                <h6>{data.baseMaterail2?.thickness || "-"}</h6>
               </div>
             </div>
           </div>

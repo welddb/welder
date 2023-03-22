@@ -4,6 +4,7 @@ import Table_Component from "@/components/table_component";
 import { Welder_Body_Data, Welder_Head_Data } from "@/components/Welder_Data";
 import Welder_Form from "@/components/welder_form";
 import axiosInstance from "@/utils/axios.instance";
+import { Debouncer } from "@/utils/debouncer";
 import React, { useState, useEffect } from "react";
 import { AiFillEdit } from "react-icons/ai";
 
@@ -12,7 +13,8 @@ const Welder = () => {
 
   const [formPopup, setFormPopup] = useState(false);
   const [intialValues, setInitialValues] = useState({
-    id: "",
+    // id: "",
+    seamName: "",
     process: "mig",
     voltage: "",
     current: "",
@@ -28,16 +30,17 @@ const Welder = () => {
     gas: "",
     fileUrl: "",
   });
+  const debouncer = new Debouncer(300);
   const [data, setData] = useState([]);
-  const getWelders = async () => {
+  const getWelders = async (name = "") => {
     try {
       setData([]);
 
-      const data = await axiosInstance.get("/welders");
+      const data = await axiosInstance.get("/welders?name=" + name);
 
       setData(data.data.data);
 
-      // console.log(data, "welders data");
+      console.log(data, "welders data");
     } catch (error) {
       console.log(error);
     }
@@ -72,7 +75,8 @@ const Welder = () => {
             buttonText="+"
             onClick={() => {
               setInitialValues({
-                id: "",
+                // id: "",
+                seamName: "",
                 process: "mig",
                 voltage: "",
                 current: "",
@@ -93,12 +97,20 @@ const Welder = () => {
             }}
           />
         </div>
-
-        <Button_Component
-          buttonText="Refresh"
-          buttonClass="self-start"
-          onClick={getWelders}
-        />
+        <div className="flex items-stretch gap-4">
+          <input
+            className="input_class"
+            placeholder="Search"
+            onChange={(e) => {
+              debouncer.debounce(() => getWelders(e.target.value));
+            }}
+          />
+          <Button_Component
+            buttonText="Refresh"
+            buttonClass="self-start"
+            onClick={getWelders}
+          />
+        </div>
 
         <Table_Component
           type="welder"

@@ -8,6 +8,7 @@ const MaterialSchema = new Schema({
 });
 
 const WelderSchema = new Schema({
+    seamName: { type: String },
     process: { type: String, enum: ['mig', 'tig', 'plasma'], default: 'mig' },
     voltage: {
         type: String

@@ -14,6 +14,7 @@ const Welder_Form = ({
 }) => {
   const initialValues = initialValuesProps || {
     // id: "",
+    seamName: "",
     process: "mig",
     voltage: "",
     current: "",
@@ -27,7 +28,7 @@ const Welder_Form = ({
     thickness_material_2: "",
     filler: "",
     gas: "",
-    fileUrl: "",
+    // fileUrl: "",
   };
 
   const handleSubmit = (values) => {
@@ -101,6 +102,17 @@ const Welder_Form = ({
                   className="input_class"
                 />
               </div> */}
+
+              <div className="field_wrapper">
+                <label htmlFor="seamName">Seam Name</label>
+                <Field
+                  type="text"
+                  name="seamName"
+                  id="seamName"
+                  placeholder="Please Enter Seam Name"
+                  className="input_class"
+                />
+              </div>
 
               <div className="field_wrapper">
                 <label htmlFor="process">Process</label>
@@ -260,7 +272,7 @@ const Welder_Form = ({
                 </div>
               </div>
 
-              <div className="field_wrapper">
+              {/* <div className="field_wrapper">
                 <label htmlFor="fileUrl">File</label>
                 <Field
                   type="file"
@@ -268,7 +280,7 @@ const Welder_Form = ({
                   id="fileUrl"
                   className="input_class"
                 />
-              </div>
+              </div> */}
 
               <Button_Component buttonText="Submit" type="submit" />
             </Form>

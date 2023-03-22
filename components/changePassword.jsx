@@ -66,7 +66,7 @@ const ChangePassword = ({ closePopup, id, call }) => {
                   name="password"
                   id="password"
                   className="border p-1 border-solid border-gray-500 rounded-md"
-                  placeholder="Enter your Current Password"
+                  placeholder="Enter New Password"
                 />
                 <span
                   className="absolute bottom-2 right-3 cursor-pointer"
@@ -93,7 +93,7 @@ const ChangePassword = ({ closePopup, id, call }) => {
                   name="confirmPassword"
                   id="confirmPassword"
                   className="border p-1 border-solid border-gray-500 rounded-md"
-                  placeholder="Enter your New Password"
+                  placeholder="Enter Confirm Password"
                 />
                 <span
                   className="absolute bottom-2 right-3 cursor-pointer"

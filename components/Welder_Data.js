@@ -1,6 +1,6 @@
 export const Welder_Head_Data = [
     {
-        text: "ID"
+        text: "Seam Name"
     },
     {
         text: "Process"

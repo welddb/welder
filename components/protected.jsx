@@ -13,7 +13,7 @@ const protectedRoute = (Component) => {
 
     if (status === "authenticated") return <Component {...props} />;
 
-    return <div>loading</div>;
+    return <div className="px-4">Loading...</div>;
   };
   return Func;
 };

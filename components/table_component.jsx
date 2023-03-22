@@ -66,7 +66,9 @@ const Table_Component = ({
         <tbody>
           {body_data.map((data, i) => (
             <tr key={i} className="text-center bg-slate-100">
-              <td className="py-2">{data._id}</td>
+              <td className="py-2">
+                {type === "user" ? data._id : data.seamName}
+              </td>
               <td className="py-2">
                 {type === "user" ? data.userName : data.process}
               </td>
