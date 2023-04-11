@@ -1,14 +1,18 @@
+import Pass_Details_Section from "@/components/pass_details_section";
 import protectedRoute from "@/components/protected";
+import Welder_Details_Container from "@/components/welder_details_section";
 import Welder_Form from "@/components/welder_form";
 import axiosInstance from "@/utils/axios.instance";
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import { AiFillEdit } from "react-icons/ai";
+import { toast } from "react-toastify";
 
 const Welder_Details = () => {
   const router = useRouter();
 
   const [data, setData] = useState([]);
+  const [passData, setPassData] = useState([]);
   const getWelder = async (id) => {
     try {
       setData([]);
@@ -17,18 +21,37 @@ const Welder_Details = () => {
 
       setData(data.data.data);
 
-      console.log(data.data.data, "welder id data");
+      // console.log(data.data.data, "welder id data");
     } catch (error) {
       console.log(error);
+      toast.error(
+        error?.response?.data?.error?.message || "Something went wrong",
+        { position: toast.POSITION.TOP_RIGHT }
+      );
+    }
+  };
+
+  const getPass = async (values) => {
+    try {
+      const data = await axiosInstance.get(`/welders/pass?welderId=${values}`);
+      // console.log(data, "get data");
+      setPassData(data.data.data);
+    } catch (error) {
+      console.log(error);
+      toast.error(
+        error?.response?.data?.error?.message || "Something went wrong",
+        { position: toast.POSITION.TOP_RIGHT }
+      );
     }
   };
 
   useEffect(() => {
     getWelder(router.query.id);
+    getPass(router.query.id);
   }, []);
 
   // console.log(router.query.id);
-
+  const [multipassSection, setMultipassSection] = useState(false);
   const [formPopup, setFormPopup] = useState(false);
   const [type, setType] = useState("Add");
   const [intialValues, setInitialValues] = useState({
@@ -69,140 +92,64 @@ const Welder_Details = () => {
       )}
       <div className="p-8 flex flex-col gap-2">
         <div className="flex items-center justify-between">
-          <h4 className="font-bold text-lg underline">Welder Details</h4>
-          <AiFillEdit
-            className="cursor-pointer hover:text-blue-400"
-            onClick={(values) => {
-              setInitialValues({
-                id: data._id,
-                seamName: data.seamName,
-                process: data.process,
-                voltage: data.voltage,
-                current: data.current,
-                gasflow: data.gasflow,
-                preheatTemp: data.preheatTemp,
-                wireFeedSpeed: data.wireFeedSpeed,
-                wireDiameter: data.wireDiameter,
-                composition_material_1: data.baseMaterail1.composition,
-                thickness_material_1: data.baseMaterail1.thickness,
-                composition_material_2: data.baseMaterail2.composition,
-                thickness_material_2: data.baseMaterail2.thickness,
-                filler: data.filler,
-                gas: data.gas,
-                fileUrl: data.fileUrl,
-              });
-              setType("Edit");
-              setFormPopup(true);
-            }}
-          />
+          <div className="flex gap-6">
+            <h4
+              className={`font-bold text-lg cursor-pointer ${
+                multipassSection ? "text-black" : "text-blue-600 underline"
+              }`}
+              onClick={() => setMultipassSection(false)}
+            >
+              Welder Details
+            </h4>
+            <h4
+              className={`font-bold text-lg cursor-pointer ${
+                multipassSection ? "text-blue-600 underline" : "text-black"
+              }`}
+              onClick={() => setMultipassSection(true)}
+            >
+              Multi Pass Details
+            </h4>
+          </div>
+          {!multipassSection && (
+            <AiFillEdit
+              className="cursor-pointer hover:text-blue-400"
+              onClick={(values) => {
+                setInitialValues({
+                  id: data._id,
+                  seamName: data.seamName,
+                  process: data.process,
+                  voltage: data.voltage,
+                  current: data.current,
+                  gasflow: data.gasflow,
+                  preheatTemp: data.preheatTemp,
+                  wireFeedSpeed: data.wireFeedSpeed,
+                  wireDiameter: data.wireDiameter,
+                  composition_material_1: data.baseMaterail1.composition,
+                  thickness_material_1: data.baseMaterail1.thickness,
+                  composition_material_2: data.baseMaterail2.composition,
+                  thickness_material_2: data.baseMaterail2.thickness,
+                  filler: data.filler,
+                  gas: data.gas,
+                  fileUrl: data.fileUrl,
+                });
+                setType("Edit");
+                setFormPopup(true);
+              }}
+            />
+          )}
         </div>
-        <p className="text-gray-500">{"#" + router.query.id}</p>
+        {!multipassSection && (
+          <p className="text-gray-500">{"#" + router.query.id}</p>
+        )}
 
-        <div className="welder_details flex flex-col gap-2">
-          <div className="welder_container">
-            {" "}
-            <div>
-              <p>Seam Name :</p>
-              <h6>{data.seamName || "-"}</h6>
-            </div>
-            <div>
-              <p>Process :</p>
-              <h6>{data.process || "-"}</h6>
-            </div>
-          </div>
-
-          <div className="welder_container">
-            <div>
-              <p>Voltage :</p>
-              <h6>{data.voltage || "-"}</h6>
-            </div>
-            <div>
-              <p>Current :</p>
-              <h6>{data.current || "-"}</h6>
-            </div>
-          </div>
-
-          <div className="welder_container">
-            <div>
-              <p>Gasflow :</p>
-              <h6>{data.gasflow || "-"}</h6>
-            </div>
-            <div>
-              <p>PreHeat Temperature :</p>
-              <h6>{data.preheatTemp || "-"}</h6>
-            </div>
-          </div>
-
-          <div className="welder_container">
-            <div>
-              <p>Wire feed Speed :</p>
-              <h6>{data.wireFeedSpeed || "-"}</h6>
-            </div>
-            <div>
-              <p>Filler :</p>
-              <h6>{data.filler || "-"}</h6>
-            </div>
-          </div>
-
-          <div className="welder_container">
-            <div>
-              <p>Gas :</p>
-              <h6>{data.gas || "-"}</h6>
-            </div>
-            <div>
-              <p>Wire Diameter :</p>
-              <h6>{data.wireDiameter || "-"}</h6>
-            </div>
-          </div>
-
-          <div>
-            <h5 className="font-bold text-gray-700 mt-2">Material 1 :</h5>
-
-            <div className="welder_container">
-              <div>
-                <p>Composition :</p>
-                <h6>{data.baseMaterail1?.composition || "-"}</h6>
-              </div>
-              <div>
-                <p>Thickness :</p>
-                <h6>{data.baseMaterail1?.thickness || "-"}</h6>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <h5 className="font-bold text-gray-700 mt-2">Material 2 :</h5>
-
-            <div className="welder_container">
-              <div>
-                <p>Composition :</p>
-                <h6>{data.baseMaterail2?.composition || "-"}</h6>
-              </div>
-              <div>
-                <p>Thickness :</p>
-                <h6>{data.baseMaterail2?.thickness || "-"}</h6>
-              </div>
-            </div>
-          </div>
-        </div>
+        {multipassSection ? (
+          <Pass_Details_Section getPass={getPass} data={passData} />
+        ) : (
+          <Welder_Details_Container data={data} />
+        )}
       </div>
     </>
   );
 };
 
 export default protectedRoute(Welder_Details);
-
-// id: "",
-//     process: "mig",
-//     voltage: "",
-//     current: "",
-//     gasflow: "",
-//     preheatTemp: "",
-//     wireFeedSpeed: "",
-//     wireDiameter: "",
-//     composition_material_1: "",
-//     thickness_material_1: "",
-//     composition_material_2: "",
-//     thickness_material_2: "",
-//     filler: "",
-//     gas: "",
